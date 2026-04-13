@@ -1,19 +1,21 @@
-# DATANAV Mobile (Expo)
+# DataNave Mobile
 
-Aplicativo mobile para arqueólogos em campo com estratégia **offline-first**.
+App mobile para arqueólogos em campo catalogarem embarcações tradicionais brasileiras. Estratégia **offline-first** — registros podem ser feitos sem internet e sincronizados depois.
 
-## Sprint 4 entregue
+**Backend:** `/home/matheus/Projetos/datanav` (Rails 8.1 API-only, porta 3000)
 
-- Módulo de sincronismo com fila local de embarcações pendentes e envio em massa para o backend Rails.
-- Tela de cadastro offline para registrar embarcações sem internet.
-- Tela de consultas com busca por nome e filtro por município.
-- Tela de perfil/configurações com dados do arqueólogo e atalho de recuperação de senha na plataforma Web.
-- Fluxo de QA orientado para testes ponta a ponta e checklist de build final via EAS.
+---
 
+## Tech Stack
 
-## Planejamento de produto (Sprints)
+- **React Native 0.81** + **Expo 54** (Managed Workflow)
+- **Expo Router 6** — file-based routing
+- **TypeScript**
+- **React Hook Form + Zod** — formulários e validação
+- **expo-secure-store** — token JWT e fila offline
+- **expo-image-picker** — captura de fotos
 
-O detalhamento completo do roadmap está em [`ROADMAP_SPRINTS.md`](./ROADMAP_SPRINTS.md).
+---
 
 ## Como executar
 
@@ -22,33 +24,61 @@ npm install
 npx expo start
 ```
 
-## Variáveis de ambiente
-
-Defina a URL do backend Rails:
+Para rodar com o backend local, iniciar o servidor Rails na porta 3000:
 
 ```bash
-EXPO_PUBLIC_API_URL=http://SEU_HOST:3000
+cd /home/matheus/Projetos/datanav
+bin/rails server
 ```
 
-> Se não for definida, o app tenta inferir automaticamente o host do Expo Dev Server.
+O app detecta automaticamente o IP do host via Expo Go. Certifique-se de que o celular e a máquina estão na mesma rede.
 
-## QA ponta a ponta (Sprint 4)
+---
 
-1. Login com usuário válido.
-2. Cadastrar embarcação no menu **Campo** (modo offline).
-3. Validar pendência em **Sync** e executar **Sincronizar agora**.
-4. Confirmar registro no backend (via aba **Consultas** e/ou `/vessels`).
-5. Validar tela **Perfil** e link de suporte para recuperação de senha.
+## Variáveis de ambiente
 
-## Build para time de arqueologia (EAS)
+Arquivo `.env` na raiz (não commitado):
+
+```
+EXPO_PUBLIC_API_URL=https://datanav.onrender.com
+```
+
+> Se não definida, o app infere o host pelo Expo Dev Server (útil em desenvolvimento local).
+
+---
+
+## Estrutura de navegação
+
+```
+(auth)/       → Login (sem cadastro no mobile — contas criadas na plataforma Web)
+(app)/
+  (tabs)/
+    index         → Home / Menu principal
+    cadastro      → Formulário de catalogação de embarcação
+    consultas     → Listagem e busca de embarcações
+    navegacao     → Navegação
+    offline       → Fila de registros pendentes para sincronizar
+    perfil        → Dados do arqueólogo e link de suporte
+```
+
+---
+
+## Funcionalidade offline
+
+Embarcações cadastradas sem conexão ficam salvas localmente (SecureStore) com status `pending`. A aba **Offline** exibe a fila e permite sincronizar quando houver conexão.
+
+---
+
+## Build para distribuição (EAS)
 
 ```bash
 eas build --profile preview --platform android
-```
-
-ou
-
-```bash
 eas build --profile preview --platform ios
 ```
-# DataNave_Mobile
+
+---
+
+## Documentação detalhada
+
+- [`CLAUDE.md`](./CLAUDE.md) — referência técnica completa (services, autenticação, API, variáveis de ambiente)
+- [`ROADMAP_SPRINTS.md`](./ROADMAP_SPRINTS.md) — planejamento de produto por sprints
