@@ -64,7 +64,7 @@ export default function MenuScreen() {
             <View style={styles.logoIcon}>
               <Ionicons name="boat" size={22} color="#fff" />
             </View>
-            <Text style={styles.logoText}>DATANAV</Text>
+            <Text style={styles.logoText}>DATANAVE</Text>
           </View>
           <Pressable onPress={handleSignOut} style={styles.logoutBtn}>
             <Ionicons name="log-out-outline" size={20} color="#dc2626" />

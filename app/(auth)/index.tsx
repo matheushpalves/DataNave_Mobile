@@ -87,7 +87,7 @@ export default function LoginScreen() {
           <View style={styles.logoIcon}>
             <Ionicons name="boat" size={40} color="#fff" />
           </View>
-          <Text style={styles.appName}>DATANAV</Text>
+          <Text style={styles.appName}>DATANAVE</Text>
           <Text style={styles.appTagline}>Catalogação de Embarcações</Text>
         </View>
 
@@ -118,7 +118,7 @@ export default function LoginScreen() {
 
           {/* Password */}
           <View style={styles.fieldGroup}>
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>Senha</Text>
             <View style={[styles.inputWrapper, passwordError ? styles.inputWrapperError : null]}>
               <Ionicons name="lock-closed-outline" size={18} color="#94a3b8" style={styles.inputIcon} />
               <TextInput
@@ -144,7 +144,7 @@ export default function LoginScreen() {
             {isSubmitting ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.signInButtonText}>Sign in</Text>
+              <Text style={styles.signInButtonText}>Entrar</Text>
             )}
           </Pressable>
 
